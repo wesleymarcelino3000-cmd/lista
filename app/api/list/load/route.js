@@ -1,7 +1,16 @@
 import { list } from "@vercel/blob";
 
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
 export async function GET(request) {
   try {
+    if (!process.env.BLOB_READ_WRITE_TOKEN) {
+      return Response.json({
+        error: "BLOB_READ_WRITE_TOKEN não encontrado. Conecte o Vercel Blob ao projeto e faça redeploy."
+      }, { status: 500 });
+    }
+
     const { searchParams } = new URL(request.url);
     const id = String(searchParams.get("id") || "").trim().toUpperCase();
 
@@ -21,6 +30,8 @@ export async function GET(request) {
 
     return Response.json(data);
   } catch (error) {
-    return Response.json({ error: error.message || "Erro ao carregar do Vercel Blob." }, { status: 500 });
+    return Response.json({
+      error: error?.message || "Erro ao carregar do Vercel Blob."
+    }, { status: 500 });
   }
 }
