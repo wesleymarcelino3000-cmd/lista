@@ -1,25 +1,25 @@
-# ListaInno com Vercel Blob
+# ListaInno com Vercel Blob - Corrigido
 
-Esta versão salva e carrega listas online usando Vercel Blob.
+Esta versão é Next.js e precisa ser hospedada como projeto Next.js no Vercel.
 
-## Como hospedar
+## Configuração no Vercel
 
-1. Extraia o ZIP.
-2. Suba todos os arquivos para um repositório no GitHub.
-3. No Vercel, clique em Add New Project e importe o repositório.
-4. Framework Preset: Next.js.
-5. Build Command: npm run build.
-6. Output Directory: deixe vazio.
-7. Clique em Deploy.
+1. Suba TODOS os arquivos deste ZIP no GitHub.
+2. No Vercel, importe o repositório.
+3. Framework Preset: Next.js.
+4. Build Command: npm run build.
+5. Output Directory: deixe vazio.
+6. Depois vá em Storage e confirme que o Blob está Connected.
+7. Faça Redeploy.
 
-## Ativar o Vercel Blob
+## Teste da API
 
-1. Entre no projeto no Vercel.
-2. Vá em Storage.
-3. Clique em Create Database.
-4. Escolha Blob.
-5. Conecte o Blob ao projeto.
-6. Faça Redeploy.
+Depois do deploy, abra no navegador:
 
-Depois disso, o app salva a lista online e gera um código como LI-ABC123.
-Com esse código você abre a lista em outro aparelho ou no outro dia.
+/api/lists/all
+
+Deve aparecer algo parecido com:
+
+{"lists":[]}
+
+Se aparecer uma página HTML, o projeto subiu errado ou ainda está usando a versão antiga.
