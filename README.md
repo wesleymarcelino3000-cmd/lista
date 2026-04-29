@@ -1,39 +1,27 @@
-# ListaInno - Final Vercel Blob
+# ListaInno - Vercel Blob PRIVATE corrigido
 
-IMPORTANTE: Apague os arquivos antigos do GitHub antes de subir esta versão.
+Corrigido para o seu Blob Store privado.
 
-## Estrutura correta na raiz do GitHub
-
-index.html
-style.css
-script.js
-package.json
-vercel.json
-api/
-  ping.js
-  lists/
-    all.js
-    save.js
-    load.js
-
-## Configuração Vercel
+## Configuração no Vercel
 
 Framework Preset: Other
 Build Command: vazio
 Output Directory: vazio
 
-## Testes obrigatórios
+## Depois de subir
 
-1. Abra:
-   /api/ping
+1. Confirme que o Blob está Connected.
+2. Faça Redeploy.
+3. Teste:
 
-Deve aparecer:
+/api/ping
+
+Deve retornar:
 {"ok":true,"api":"online"}
 
-2. Abra:
-   /api/lists/all
+/api/lists/all
 
-Deve aparecer:
+Deve retornar:
 {"lists":[]}
 
-Se aparecer HTML, você ainda está com arquivo antigo ou Root Directory errado.
+Depois teste o botão Salvar online no app.
