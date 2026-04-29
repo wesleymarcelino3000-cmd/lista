@@ -150,7 +150,15 @@ export default function Home() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
       });
-      const data = await res.json();
+
+      const text = await res.text();
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch {
+        throw new Error("A API /api/lists/save não subiu corretamente. Reenvie o ZIP corrigido no GitHub e faça Redeploy no Vercel.");
+      }
+
       if (!res.ok) throw new Error(data.error || "Erro ao salvar.");
 
       setTraining((t) => ({ ...t, id: code }));
@@ -171,7 +179,13 @@ export default function Home() {
     try {
       setLoading(true);
       const res = await fetch(`/api/lists/load?id=${encodeURIComponent(code)}`);
-      const data = await res.json();
+      const text = await res.text();
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch {
+        throw new Error("A API /api/lists/load não subiu corretamente. Reenvie o ZIP corrigido no GitHub e faça Redeploy no Vercel.");
+      }
       if (!res.ok) throw new Error(data.error || "Lista não encontrada.");
 
       setTraining(data.training);
@@ -189,7 +203,9 @@ export default function Home() {
   async function fetchOnlineLists() {
     try {
       const res = await fetch("/api/lists/all");
-      const data = await res.json();
+      const text = await res.text();
+      let data = { lists: [] };
+      try { data = JSON.parse(text); } catch {}
       setOnlineLists(data.lists || []);
     } catch {}
   }
