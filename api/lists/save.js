@@ -23,7 +23,7 @@ export default async function handler(req, res) {
     data.savedAt = new Date().toISOString();
 
     await put(`listainno/${id}.json`, JSON.stringify(data, null, 2), {
-      access: "public",
+      access: "private",
       contentType: "application/json",
       addRandomSuffix: false,
       allowOverwrite: true

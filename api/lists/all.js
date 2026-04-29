@@ -1,4 +1,4 @@
-import { list } from "@vercel/blob";
+import { list, get } from "@vercel/blob";
 
 export default async function handler(req, res) {
   try {
@@ -11,10 +11,17 @@ export default async function handler(req, res) {
 
     for (const file of result.blobs || []) {
       try {
-        const response = await fetch(file.url, { cache: "no-store" });
-        const data = await response.json();
+        const pathname = file.pathname || file.url?.split(".com/")?.[1];
+        if (!pathname) continue;
+
+        const item = await get(pathname, { access: "private" });
+        if (!item || item.statusCode !== 200) continue;
+
+        const text = await new Response(item.stream).text();
+        const data = JSON.parse(text);
+
         lists.push({
-          id: data.training?.id || file.pathname.split("/").pop()?.replace(".json", ""),
+          id: data.training?.id || pathname.split("/").pop()?.replace(".json", ""),
           name: data.training?.name || "Lista sem nome",
           savedAt: data.savedAt || null
         });

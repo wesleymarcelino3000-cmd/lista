@@ -1,4 +1,4 @@
-import { list } from "@vercel/blob";
+import { get } from "@vercel/blob";
 
 export default async function handler(req, res) {
   try {
@@ -14,15 +14,14 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Informe o código da lista." });
     }
 
-    const result = await list({ prefix: `listainno/${id}.json`, limit: 1 });
-    const file = result.blobs?.[0];
+    const result = await get(`listainno/${id}.json`, { access: "private" });
 
-    if (!file) {
+    if (!result || result.statusCode !== 200) {
       return res.status(404).json({ error: "Lista não encontrada." });
     }
 
-    const response = await fetch(file.url, { cache: "no-store" });
-    const data = await response.json();
+    const text = await new Response(result.stream).text();
+    const data = JSON.parse(text);
 
     return res.status(200).json(data);
   } catch (error) {
