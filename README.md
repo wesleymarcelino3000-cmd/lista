@@ -1,29 +1,39 @@
-# ListaInno - Vercel Blob versão API simples
+# ListaInno - Final Vercel Blob
 
-Esta versão não usa Next.js. Ela usa:
-- index.html, style.css e script.js na raiz
-- funções Vercel em /api/lists
-- Vercel Blob para salvar as listas
+IMPORTANTE: Apague os arquivos antigos do GitHub antes de subir esta versão.
 
-## Como subir no Vercel
+## Estrutura correta na raiz do GitHub
 
-1. Apague os arquivos antigos do repositório ou crie um repositório novo.
-2. Envie TODOS os arquivos deste ZIP.
-3. No Vercel:
-   - Framework Preset: Other
-   - Build Command: vazio
-   - Output Directory: vazio
-4. Verifique se o Blob está Connected.
-5. Faça Redeploy.
+index.html
+style.css
+script.js
+package.json
+vercel.json
+api/
+  ping.js
+  lists/
+    all.js
+    save.js
+    load.js
 
-## Teste obrigatório
+## Configuração Vercel
 
-Abra no navegador:
+Framework Preset: Other
+Build Command: vazio
+Output Directory: vazio
 
-/api/lists/all
+## Testes obrigatórios
 
-O correto é aparecer:
+1. Abra:
+   /api/ping
 
+Deve aparecer:
+{"ok":true,"api":"online"}
+
+2. Abra:
+   /api/lists/all
+
+Deve aparecer:
 {"lists":[]}
 
-Se aparecer HTML, o Vercel ainda está com a versão antiga ou os arquivos não foram substituídos.
+Se aparecer HTML, você ainda está com arquivo antigo ou Root Directory errado.
