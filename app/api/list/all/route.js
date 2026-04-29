@@ -1,7 +1,14 @@
 import { list } from "@vercel/blob";
 
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
+    if (!process.env.BLOB_READ_WRITE_TOKEN) {
+      return Response.json({ lists: [] });
+    }
+
     const result = await list({ prefix: "listainno/", limit: 100 });
     const lists = [];
 
@@ -21,6 +28,6 @@ export async function GET() {
 
     return Response.json({ lists });
   } catch (error) {
-    return Response.json({ error: error.message || "Erro ao listar." }, { status: 500 });
+    return Response.json({ lists: [], error: error?.message || "Erro ao listar." }, { status: 500 });
   }
 }
